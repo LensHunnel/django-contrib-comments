@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
 from django.db import models
@@ -69,6 +69,8 @@ class CommentAbstractModel(BaseCommentAbstractModel):
                                      help_text=_('Check this box if the comment is inappropriate. '
                                                  'A "This comment has been removed" message will '
                                                  'be displayed instead.'))
+    files = GenericRelation('noc.DocumentHasObject', 'doc_obj_objet_pk', 'doc_obj_content_type',
+                            related_query_name='comments_files')
 
     # Manager
     objects = CommentManager()
